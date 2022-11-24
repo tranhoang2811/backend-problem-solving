@@ -43,7 +43,6 @@ entity Invoice {
     transactionId: ObjectId <<FK>>
     --
     *totalCost: Number 
-    *createdAt: Date
     *payment: Payment
     createdAt: Date
     updatedAt: Date
