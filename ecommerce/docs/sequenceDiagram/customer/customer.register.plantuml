@@ -1,0 +1,25 @@
+@startuml customer register
+
+actor Customer 
+control server
+database customer
+
+opt Customer registration
+    Customer -> server: POST /register with customer data
+    activate server
+    server -> customer: findCustomerByEmail(email)
+    activate customer
+    alt Found Customer
+        server <-- customer: foundCustomer
+        Customer <-- server: 409, Customer email already exists
+    else Not Found Customer
+        server <-- customer: notFoundCustomer
+        server -> customer: createOne(customer data)
+        server <-- customer: success
+        deactivate customer
+        Customer <- server: 200, success
+        deactivate server
+    end
+end
+
+@enduml

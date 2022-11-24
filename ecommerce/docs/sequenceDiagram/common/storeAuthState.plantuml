@@ -1,0 +1,12 @@
+@startuml store auth state
+
+actor User 
+control browser
+
+opt Store auth state
+    User -> browser: remember account
+    browser -> browser: Set token to local
+    User <-- browser: Remember success
+end
+
+@enduml

@@ -1,0 +1,23 @@
+@startuml customer login
+
+actor Customer 
+control server
+database customer
+
+opt Customer login
+    Customer -> server: POST /login with email and password
+    activate server
+    server -> customer: findCustomerByEmailAndPassword(email, password)
+    activate customer
+    alt Not Found Customer
+        server <-- customer: notFoundCustomer
+        Customer <-- server: 404, Customer does not exist 
+    else Found Customer
+        server <-- customer: foundCustomer
+        deactivate customer
+        Customer <-- server: 200, success, accessToken, setTokenToSession
+        deactivate server
+    end
+end
+
+@enduml

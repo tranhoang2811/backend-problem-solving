@@ -1,0 +1,97 @@
+@startuml ecommerceERD
+
+skinparam linetype ortho
+
+entity User {
+    *id: ObjectId <<generated>>
+    --
+    *email: String
+    *password: String
+    *phoneNumber: Number
+    *name: String
+    role: Role
+    address: String
+    age: Number
+    gender: Gender
+    createdAt: Date
+    updatedAt: Date
+}
+
+entity Cart {
+    *id: ObjectId <<generated>>
+    --
+    userId: ObjectId <<FK>>
+    --
+    totalProduct: Number
+    createdAt: Date
+    updatedAt: Date
+}
+
+entity Transaction {
+    *id: ObjectId <<generated>>
+    --
+    userId: ObjectId <<FK>>
+    --
+    *deliveryStatus: DeliveryStatus
+    createdAt: Date
+    updatedAt: Date
+}
+
+entity Invoice {
+    *id: ObjectId <<generated>>
+    --
+    transactionId: ObjectId <<FK>>
+    --
+    *totalCost: Number 
+    *createdAt: Date
+    *payment: Payment
+    createdAt: Date
+    updatedAt: Date
+}
+
+entity Product {
+    *id: ObjectId <<generated>>
+    --
+    invoiceId: ObjectId <<FK>>
+    cartId: ObjectId <<FK>>
+    --
+    *name: String
+    *price: Number
+    *category: String
+    imagePath: String
+    createdAt: Date
+    updatedAt: Date
+}
+
+enum DeliveryStatus{
+    Success
+    Fail
+    Delivering  
+}
+
+enum Gender {
+    Male
+    Female
+    Other
+}
+
+enum Payment {
+    Cash
+    CreditCard
+    Banking
+}
+
+enum Role {
+    Admin
+    Customer
+    Agency
+}
+
+User ||--|{ Transaction
+Transaction ||--|| Invoice
+Invoice ||--|{ Product
+User ||--|| Cart
+Cart ||--|{ Product
+User ||--|{ Product
+
+@enduml

@@ -1,0 +1,12 @@
+@startuml customer logout
+
+actor Customer 
+control browser
+
+opt Customer logout
+    Customer -> browser: Logout
+    browser -> browser: Delete token in the local
+    Customer <-- browser: Redirect to login page
+end
+
+@enduml
