@@ -1,5 +1,7 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
 import {Product} from './product.model';
+import {Cart} from './cart.model';
+import {Transaction} from './transaction.model';
 
 @model()
 export class User extends Entity {
@@ -66,6 +68,12 @@ export class User extends Entity {
 
   @hasMany(() => Product)
   products: Product[];
+
+  @hasOne(() => Cart)
+  cart: Cart;
+
+  @hasMany(() => Transaction)
+  transactions: Transaction[];
 
   constructor(data?: Partial<User>) {
     super(data);
